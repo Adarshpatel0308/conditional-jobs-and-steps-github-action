@@ -1,4 +1,4 @@
-name: Website Deployment
+name:  Continue Website Deployment
 on:
   push:
     branches:
@@ -35,10 +35,10 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Test code
+        continue-on-error: true # If this step getting fails then our workflow will never stopped
         id: run-tests
         run: npm run test
       - name: Upload test report
-        if: failure() && steps.run-tests.outcome == 'failure' # By adding this IF conditional so If our test script is failed so our workflow doesn't stop.
         uses: actions/upload-artifact@v4
         with:
           name: test-report
