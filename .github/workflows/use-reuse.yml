@@ -69,9 +69,6 @@ jobs:
   deploy:
     needs: build
     uses: ./.github/workflows/reusable.yml
-    with:
-      target_branch: gh-pages
-      github_token: ${{ secrets.GITHUB_TOKEN }}
     
   report:
     needs: [lint, deploy]
