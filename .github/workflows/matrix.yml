@@ -3,9 +3,17 @@ on: push
 jobs:
   build:
     strategy:
-      matrix:
+      matrix: # By using matrix we can run this job for these all values that was mentioned.
         node-version: [12, 14, 16]
         operating-system: [ubuntu-latest, windows-latest]
+        include: # By using include we can run this job for only these values that was mentioned.
+          - node-version: 14
+            operating-system: ubuntu-latest
+          - node-version: 18
+            operating-system: ubuntu-latest
+        exclude: # By using exclude we can exclude the job to run for this version and OS
+          - node-version: 12
+            operating-system: windows-latest
     runs-on: ${{ matrix.operating-system }}
     steps:
       - name: Get Code 
