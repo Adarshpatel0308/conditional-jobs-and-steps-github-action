@@ -1,8 +1,23 @@
 name: Reusable Deploy
-on: workflow_call
+on:
+  workflow_call:
+    inputs: # By using this key under workflow_call we can take the input in workflow, that is reuse by other workflow
+      artifact-name:  # Inputs passed by the caller workflow
+        description: The name of the deployable artifact Files
+        required: true
+        default: dist
+        type: string
+      
+
 jobs: 
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Get Code 
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.artifact-name }} # This gets the artifact name dynamically
+      - name: List Files
+        run: ls
       - name: Output information
         run: echo "Deploying & uploading..."
